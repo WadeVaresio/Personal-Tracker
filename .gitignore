@@ -40,3 +40,6 @@ frontend/build
 
 # Backend Code ##
 .mvn
+
+## Secret files ##
+secrets-localhost.properties

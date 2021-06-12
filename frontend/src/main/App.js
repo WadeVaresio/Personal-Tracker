@@ -1,17 +1,29 @@
 import React from "react";
-import {Switch, Route} from "react-dom";
-import {BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import './App.css';
+import Weather from "./pages/Weather";
+import ApplicationNavBar from "./components/ApplicationNavBar";
+
 
 function App() {
-  return (
-      <Router>
-          <div className="App">
-              <Home/>
-          </div>
-      </Router>
-  );
+    const styling = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    };
+
+    return (
+        <div className={"App"} style={styling}>
+            <BrowserRouter>
+                <Switch>
+                    <Route path={"/weather"} component={Weather}/>
+                    <Route path={"/"} component={Home}/>
+                </Switch>
+                <ApplicationNavBar/>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;

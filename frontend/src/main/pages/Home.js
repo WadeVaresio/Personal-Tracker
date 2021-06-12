@@ -1,9 +1,12 @@
 import React from "react";
-import SideBar from "../components/SideBar";
+import background from "../images/background.png";
+
 
 const Home = () => {
     return (
-        <SideBar />
+        <div id={"bg"}>
+            <img src={background} alt={""}/>
+        </div>
     );
 }
 
