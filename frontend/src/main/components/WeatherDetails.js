@@ -5,8 +5,6 @@ import {Card} from "react-bootstrap";
 const WeatherDetails = ({data}) => {
     return (
         <div style={{}}>
-            <h1>Test</h1>
-
             <div className={"item-container"}>
                 <Card>
                     <Card.Body>
