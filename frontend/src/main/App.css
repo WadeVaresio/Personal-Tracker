@@ -38,7 +38,7 @@
   vertical-align: center;
   horiz-align: center;
   flex-wrap: wrap;
-  gap: 2em;
+  gap: 50px;
 }
 
 @keyframes App-logo-spin {

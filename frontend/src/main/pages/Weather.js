@@ -5,7 +5,7 @@ import {fetchWithoutToken} from "../services/fetch";
 import {ImageBackground} from "react-native";
 
 const Weather = () =>{
-    const { data: weatherData} = useSWR("api/weather/goleta", fetchWithoutToken)
+    const { data: weatherData} = useSWR(`/api/weather?location=${encodeURIComponent("Goleta")}`, fetchWithoutToken)
 
     const styles = {
         image: {
@@ -19,7 +19,7 @@ const Weather = () =>{
 
     return(
         <ImageBackground source={"/api/nasa/satImage/Goleta"} style={styles.image}>
-            <WeatherDetails data={weatherData}/>
+            <WeatherDetails weatherData={weatherData}/>
         </ImageBackground>
     );
 }
