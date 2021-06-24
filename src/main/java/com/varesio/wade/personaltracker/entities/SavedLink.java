@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Reminder {
+public class SavedLink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -18,17 +18,21 @@ public class Reminder {
     @Column
     private String note;
 
-    public Reminder(long id, String userId, String link, String note) {
+    public SavedLink(long id, String userId, String link, String note) {
         this.id = id;
         this.userId = userId;
         this.link = link;
         this.note = note;
     }
 
-    public Reminder(String userId, String link, String note) {
+    public SavedLink(String userId, String link, String note) {
         this.userId = userId;
         this.link = link;
         this.note = note;
+    }
+
+    public SavedLink() {
+
     }
 
     public long getId() {
@@ -67,8 +71,8 @@ public class Reminder {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reminder reminder = (Reminder) o;
-        return id == reminder.id && userId.equals(reminder.userId) && link.equals(reminder.link) && note.equals(reminder.note);
+        SavedLink savedLink = (SavedLink) o;
+        return id == savedLink.id && userId.equals(savedLink.userId) && this.link.equals(savedLink.link) && note.equals(savedLink.note);
     }
 
     @Override

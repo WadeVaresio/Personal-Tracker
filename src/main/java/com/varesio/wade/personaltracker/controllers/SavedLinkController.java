@@ -1,22 +1,21 @@
 package com.varesio.wade.personaltracker.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.varesio.wade.personaltracker.entities.Reminder;
-import com.varesio.wade.personaltracker.repositories.ReminderRepository;
+import com.varesio.wade.personaltracker.entities.SavedLink;
+import com.varesio.wade.personaltracker.repositories.SavedLinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/reminders/")
-public class ReminderController {
+public class SavedLinkController {
 
     @Autowired
-    private ReminderRepository reminderRepository;
+    private SavedLinkRepository savedLinkRepository;
 
     @Autowired
     private ObjectMapper mapper;
@@ -24,8 +23,8 @@ public class ReminderController {
     @PostMapping(value="new")
     public ResponseEntity<String> newReminder(@RequestParam String link,
                                               @RequestParam String note) throws IOException {
-        Reminder reminder = new Reminder(null, link, note);
-        Reminder saved = reminderRepository.save(reminder);
+        SavedLink reminder = new SavedLink(null, link, note);
+        SavedLink saved = savedLinkRepository.save(reminder);
 
         String mapped = mapper.writeValueAsString(saved);
         return ResponseEntity.ok().body(mapped);
@@ -33,7 +32,7 @@ public class ReminderController {
 
     @GetMapping(value="all/{id}")
     public ResponseEntity<String> getAllByUserId(@RequestParam String userId) throws IOException{
-        List<Reminder> results = reminderRepository.findAllByUserId(userId);
+        List<SavedLink> results = savedLinkRepository.findAllByUserId(userId);
 
         return ResponseEntity.ok().body(mapper.writeValueAsString(results));
     }

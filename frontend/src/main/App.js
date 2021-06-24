@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import './App.css';
 import Weather from "./pages/Weather";
 import ApplicationNavBar from "./components/ApplicationNavBar";
+import SavedLinks from "./pages/SavedLinks";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Switch>
                     <Route path={"/weather"} component={Weather}/>
                     <Route path={"/"} component={Home}/>
+                    <Route path={"/savedLinks"} component={SavedLinks}/>
                 </Switch>
                 <ApplicationNavBar/>
             </BrowserRouter>

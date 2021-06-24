@@ -1,6 +1,7 @@
 import React from "react";
-import {Container, Nav, Navbar, NavLink} from "react-bootstrap";
+import {Container, Nav, Navbar, NavLink, Button} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import LoginButton from "./LoginButton";
 
 
 const ApplicationNavBar = () => {
@@ -23,6 +24,12 @@ const ApplicationNavBar = () => {
                         <LinkContainer to={"/weather"}>
                             <NavLink>Weather</NavLink>
                         </LinkContainer>
+
+                        <LinkContainer to={"/savedLinks"}>
+                            <NavLink>Saved Links</NavLink>
+                        </LinkContainer>
+
+                        <LoginButton/>
                     </Nav>
                 </Navbar>
             </Container>
