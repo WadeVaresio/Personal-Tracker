@@ -19,8 +19,8 @@ function App() {
             <BrowserRouter>
                 <Switch>
                     <Route path={"/weather"} component={Weather}/>
-                    <Route path={"/"} component={Home}/>
                     <Route path={"/savedLinks"} component={SavedLinks}/>
+                    <Route path={"/"} component={Home}/>
                 </Switch>
                 <ApplicationNavBar/>
             </BrowserRouter>

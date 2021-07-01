@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Nav, Navbar, NavLink, Button} from "react-bootstrap";
+import { Container, Nav, Navbar, NavLink } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import LoginButton from "./LoginButton";
 
