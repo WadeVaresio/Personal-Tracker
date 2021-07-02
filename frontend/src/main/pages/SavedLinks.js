@@ -5,8 +5,24 @@ import {saveNewLink} from "../services/SavedLinksService";
 import BootstrapTable from "react-bootstrap-table-next";
 import useSWR from "swr";
 import {fetchWithoutToken} from "../services/fetch";
+import {ImageBackground} from "react-native";
+import Goleta_Open_Space from "../images/Goleta_Open_Space.jpg";
+
 
 const SavedLinks = () => {
+    const styles = {
+        image: {
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center",
+            minWidth: "101%",
+            minHeight: "100%"
+        },
+        table: {
+            backgroundColor:'transparent'
+        }
+    };
+
     const [showModal, setShowModal] = useState(false);
     const [newLink, setNewLink] = useState("");
     const [newLinkNote, setNewLinkNote] = useState("");
@@ -26,30 +42,27 @@ const SavedLinks = () => {
         setShowModal(false)
     }
 
-    const { data: allLinks } = useSWR("/api/savedLinks/all", fetchWithoutToken);
+    const { data: allLinks, errorLinks, mutate: mutateLinks } = useSWR("/api/savedLinks/all", fetchWithoutToken);
 
     const tableColumns = [{
-        dataField: 'id',
-        text: 'id'
-    }, {
         dataField: 'link',
         text: 'Link'
     }, {
         dataField: 'note',
         text: 'Note'
-    }]
-
+    }];
 
     return (
         <>
-            <Jumbotron>
-                <Button variant="primary" onClick={handleShow}>
-                    New Saved Link
-                </Button>
-                <BootstrapTable keyField={'id'} data={allLinks || []} columns={tableColumns}/>
+            <ImageBackground source={Goleta_Open_Space} style={styles.image}>
+                <Jumbotron style={styles.table}>
+                    <Button variant="primary" onClick={handleShow}>
+                        New Saved Link
+                    </Button>
+                    <BootstrapTable keyField={'id'} data={allLinks || []} columns={tableColumns}/>
 
-            </Jumbotron>
-
+                </Jumbotron>
+            </ImageBackground>
 
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
