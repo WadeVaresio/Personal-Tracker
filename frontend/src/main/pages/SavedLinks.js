@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import {useState} from "react";
+import {saveNewLink} from "../services/SavedLinksService";
 
 const SavedLinks = () => {
     const [showModal, setShowModal] = useState(false);
@@ -18,8 +19,7 @@ const SavedLinks = () => {
     const handleNewLinkNote = (change) => {setNewLinkNote(change.target.value)};
 
     const handleSubmit = () => {
-        console.log(newLink);
-        console.log(newLinkNote)
+        saveNewLink({link: newLink, note: newLinkNote});
         setShowModal(false)
     }
 

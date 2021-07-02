@@ -7,6 +7,7 @@ import java.util.Objects;
 public class SavedLink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private long id;
 
     @Column
@@ -78,5 +79,13 @@ public class SavedLink {
     @Override
     public int hashCode() {
         return Objects.hash(id, userId, link, note);
+    }
+
+    @Override
+    public String toString(){
+        return "{id: " + this.id +
+                ", userId: " + this.userId +
+                ", link: " + this.link +
+                ", note: " + this.note;
     }
 }
