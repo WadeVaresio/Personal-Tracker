@@ -19,10 +19,11 @@ public class SavedNote {
 
     public SavedNote(long id, String userId, String note) {
         this.id = id;
+        this.userId = userId;
         this.note = note;
     }
 
-    public SavedNote(String userId, String link, String note) {
+    public SavedNote(String userId, String note) {
         this.userId = userId;
         this.note = note;
     }
@@ -70,6 +71,7 @@ public class SavedNote {
     public String toString(){
         return "{id: " + this.id +
                 ", userId: " + this.userId +
-                ", note: " + this.note;
+                ", note: " + this.note +
+                " }";
     }
 }

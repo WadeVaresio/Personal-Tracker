@@ -21,18 +21,11 @@ public class SavedNoteController {
     private ObjectMapper mapper;
 
     @PostMapping(value="/new")
-    public ResponseEntity<String> newReminder(@RequestBody SavedNote savedNote) throws IOException {
+    public ResponseEntity<String> newNote(@RequestBody SavedNote savedNote) throws IOException {
         SavedNote saved = savedNoteRepository.save(savedNote);
 
         String mapped = mapper.writeValueAsString(saved);
         return ResponseEntity.ok().body(mapped);
-    }
-
-    @GetMapping(value="/all/{id}")
-    public ResponseEntity<String> getAllByUserId(@RequestParam String userId) throws IOException{
-        List<SavedNote> results = savedNoteRepository.findAllByUserId(userId);
-
-        return ResponseEntity.ok().body(mapper.writeValueAsString(results));
     }
 
     @GetMapping("/all")
