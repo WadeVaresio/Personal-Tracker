@@ -28,8 +28,6 @@ const ApplicationNavBar = () => {
                         <LinkContainer to={"/savedLinks"}>
                             <NavLink>Saved Links</NavLink>
                         </LinkContainer>
-
-                        <LoginButton/>
                     </Nav>
                 </Navbar>
             </Container>

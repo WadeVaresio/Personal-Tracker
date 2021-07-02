@@ -1,7 +1,10 @@
 import React from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import {Button, Modal, Form, Jumbotron} from "react-bootstrap";
 import {useState} from "react";
 import {saveNewLink} from "../services/SavedLinksService";
+import BootstrapTable from "react-bootstrap-table-next";
+import useSWR from "swr";
+import {fetchWithoutToken} from "../services/fetch";
 
 const SavedLinks = () => {
     const [showModal, setShowModal] = useState(false);
@@ -23,11 +26,30 @@ const SavedLinks = () => {
         setShowModal(false)
     }
 
+    const { data: allLinks } = useSWR("/api/savedLinks/all", fetchWithoutToken);
+
+    const tableColumns = [{
+        dataField: 'id',
+        text: 'id'
+    }, {
+        dataField: 'link',
+        text: 'Link'
+    }, {
+        dataField: 'note',
+        text: 'Note'
+    }]
+
+
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                New Saved Link
-            </Button>
+            <Jumbotron>
+                <Button variant="primary" onClick={handleShow}>
+                    New Saved Link
+                </Button>
+                <BootstrapTable keyField={'id'} data={allLinks || []} columns={tableColumns}/>
+
+            </Jumbotron>
+
 
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
