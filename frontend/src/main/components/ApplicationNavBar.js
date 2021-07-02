@@ -25,8 +25,8 @@ const ApplicationNavBar = () => {
                             <NavLink>Weather</NavLink>
                         </LinkContainer>
 
-                        <LinkContainer to={"/savedLinks"}>
-                            <NavLink>Saved Links</NavLink>
+                        <LinkContainer to={"/savedNotes"}>
+                            <NavLink>Saved Notes</NavLink>
                         </LinkContainer>
                     </Nav>
                 </Navbar>

@@ -7,7 +7,7 @@ const saveNewLink = async (linkData) => {
         body: JSON.stringify(linkData)
     };
 
-    return await fetch('/api/savedLinks/new', requestOptions);
+    return await fetch('/api/savedNotes/new', requestOptions);
 }
 
 export {saveNewLink}
