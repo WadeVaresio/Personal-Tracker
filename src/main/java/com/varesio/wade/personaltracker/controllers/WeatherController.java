@@ -1,6 +1,5 @@
 package com.varesio.wade.personaltracker.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.varesio.wade.personaltracker.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

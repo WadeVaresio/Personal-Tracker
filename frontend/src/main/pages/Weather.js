@@ -12,7 +12,7 @@ const Weather = () =>{
             flex: 1,
             resizeMode: "cover",
             justifyContent: "center",
-            minWidth: "101.5%",
+            minWidth: "100%",
             minHeight: "100%"
         }
     }
