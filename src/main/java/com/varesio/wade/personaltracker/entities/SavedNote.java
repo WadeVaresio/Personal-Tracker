@@ -23,11 +23,6 @@ public class SavedNote {
         this.note = note;
     }
 
-    public SavedNote(String userId, String note) {
-        this.userId = userId;
-        this.note = note;
-    }
-
     public SavedNote() { }
 
     public long getId() {
