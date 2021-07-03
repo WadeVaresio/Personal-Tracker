@@ -1,14 +1,12 @@
 import React from "react";
-import {Button, Modal, Form, Jumbotron} from "react-bootstrap";
+import {Button, Modal, Form} from "react-bootstrap";
 import {useState} from "react";
-import {saveNewLink} from "../services/NotesService";
-import BootstrapTable from "react-bootstrap-table-next";
-import useSWR from "swr";
-import {fetchWithoutToken} from "../services/fetch";
+import {saveNewNote} from "../services/NotesService";
 import {ImageBackground} from "react-native";
 import Goleta_Open_Space from "../images/Goleta_Open_Space.jpg";
-import {useHistory} from "react-router-dom";
 import {Container} from "react-bootstrap";
+import SavedNotesTable from "../components/SavedNotesTable";
+import useSWR from "swr";
 
 const SavedNotes = () => {
     const styles = {
@@ -18,15 +16,13 @@ const SavedNotes = () => {
             justifyContent: "center",
             minWidth: "101%",
             minHeight: "100%"
-        },
-        table: {
-            width: '5vw'
         }
     };
 
     const [showModal, setShowModal] = useState(false);
     const [newNote, setNewNote] = useState("");
-    const history = useHistory();
+    const fetcher = url => fetch(url).then(res => res.json());
+    const { data: allNotes, mutate: mutateNotes } = useSWR("/api/savedNotes/all", fetcher);
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => {
@@ -37,17 +33,10 @@ const SavedNotes = () => {
     const handleNewNote = (change) => {setNewNote(change.target.value)};
 
     const handleSubmit = () => {
-        saveNewLink({note: newNote});
-        setShowModal(false)
-        history.push("/savedNotes")
-    }
-
-    const { data: allLinks } = useSWR("/api/savedNotes/all", fetchWithoutToken);
-
-    const tableColumns = [{
-        dataField: 'note',
-        text: 'Note'
-    }];
+        saveNewNote({note: newNote});
+        mutateNotes();
+        setShowModal(false);
+    };
 
     return (
         <>
@@ -56,8 +45,8 @@ const SavedNotes = () => {
                     <Button variant="primary" onClick={handleShow}>
                         New Note
                     </Button>
-                    <BootstrapTable keyField={'id'} data={allLinks || []} columns={tableColumns} style={"width: auto;"} class={"table table-responsive"}/>
-
+                    <hr/>
+                    <SavedNotesTable notes={allNotes}/>
                 </Container>
             </ImageBackground>
 

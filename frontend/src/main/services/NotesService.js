@@ -1,4 +1,4 @@
-const saveNewLink = async (linkData) => {
+const saveNewNote = async (linkData) => {
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -8,6 +8,17 @@ const saveNewLink = async (linkData) => {
     };
 
     return await fetch('/api/savedNotes/new', requestOptions);
+};
+
+const saveEditedNote = async (editedNote) => {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedNote)
+    };
+    return await fetch(`/api/savedNotes/put`, requestOptions);
 }
 
-export {saveNewLink}
+export {saveNewNote, saveEditedNote}
