@@ -54,7 +54,7 @@ public class SavedNote {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SavedNote savedNote = (SavedNote) o;
-        return id == savedNote.id && userId.equals(savedNote.userId) && note.equals(savedNote.note);
+        return id == savedNote.id && note.equals(savedNote.note);
     }
 
     @Override

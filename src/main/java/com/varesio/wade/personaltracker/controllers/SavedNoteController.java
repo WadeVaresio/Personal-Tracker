@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,8 +34,8 @@ public class SavedNoteController {
         return ResponseEntity.ok().body(mapper.writeValueAsString(savedNoteRepository.findAll()));
     }
 
-    @PutMapping("/put")
-    public ResponseEntity<String> editNoteById(@RequestBody SavedNote editedNote) throws JsonProcessingException {
+    @PutMapping(value = "/put", produces = "application/json")
+    public ResponseEntity<String> editNote(@RequestBody SavedNote editedNote) throws JsonProcessingException {
         Optional<SavedNote> searchResult = savedNoteRepository.findById(editedNote.getId());
 
         if(searchResult.isEmpty())
@@ -44,5 +43,16 @@ public class SavedNoteController {
 
         savedNoteRepository.save(editedNote);
         return ResponseEntity.ok().body(mapper.writeValueAsString(editedNote));
+    }
+
+    @DeleteMapping(value = "/delete", produces="application/json")
+    public ResponseEntity<String> deleteNote(@RequestBody SavedNote deleteNote){
+        Optional<SavedNote> savedNote = savedNoteRepository.findById(deleteNote.getId());
+
+        if(savedNote.isEmpty() || !savedNote.equals(Optional.of(deleteNote)))
+            return ResponseEntity.badRequest().build();
+
+        savedNoteRepository.delete(deleteNote);
+        return ResponseEntity.noContent().build();
     }
 }

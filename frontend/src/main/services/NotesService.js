@@ -19,6 +19,18 @@ const saveEditedNote = async (editedNote) => {
         body: JSON.stringify(editedNote)
     };
     return await fetch(`/api/savedNotes/put`, requestOptions);
+};
+
+const deleteNote = async (note) => {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(note)
+    };
+
+    return await fetch('/api/savedNotes/delete', requestOptions);
 }
 
-export {saveNewNote, saveEditedNote}
+export {saveNewNote, saveEditedNote, deleteNote}

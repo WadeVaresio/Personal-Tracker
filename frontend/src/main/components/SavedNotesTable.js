@@ -3,7 +3,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import {Button, Modal, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from "react";
-import {saveEditedNote} from "../services/NotesService";
+import {saveEditedNote, deleteNote} from "../services/NotesService";
 
 
 const SavedNotesTable = (notes) => {
@@ -19,10 +19,11 @@ const SavedNotesTable = (notes) => {
         setShowModal(true);
     };
 
-    const getEditButton = (cell, row, rowIndex) => {
+    const getEditDeleteButtons = row => {
         return (
             <>
-                <Button onClick={() => editNoteClick(row)}>Edit</Button>
+                <Button onClick={() => editNoteClick(row)} style={{marginRight: "15px"}}>Edit</Button>
+                <Button variant={"danger"} onClick={() => deleteNote(row)}>Delete</Button>
             </>
         );
     };
@@ -44,9 +45,9 @@ const SavedNotesTable = (notes) => {
         text: 'Note'
     }, {
         dataField: 'edit',
-        text: 'Edit',
+        text: 'Edit/Delete',
         isDummyField: true,
-        formatter: (cell, row, rowIndex) => getEditButton(cell, row, rowIndex)
+        formatter: (_cell, row) => getEditDeleteButtons(row)
     }];
 
     return(
