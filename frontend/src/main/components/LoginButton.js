@@ -11,7 +11,7 @@ const LoginButton = () => {
 
     return (
         <Button href="/oauth2/authorization/google" onClick={handleClick}>
-            Login
+            Google Login
         </Button>
     );
 }
