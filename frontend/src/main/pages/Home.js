@@ -18,7 +18,7 @@ function formatAMPM(date) {
 
 
 const Home = () => {
-    const [value, setValue] = useState(new Date())
+    const [value, setValue] = useState(new Date());
 
     useEffect(() => {
         const interval = setInterval(
