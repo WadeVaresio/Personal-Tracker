@@ -1,8 +1,8 @@
 package com.varesio.wade.personaltracker.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/loggedIn")
-    public ResponseEntity<String> isLoggedIn(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if(auth.getPrincipal().equals("anonymousUser")) // not logged in
-            return ResponseEntity.ok().body("false");
-
-        return ResponseEntity.ok().body("true");
+    public ResponseEntity<String> isLoggedIn(@AuthenticationPrincipal OidcUser user){
+        if(user != null)
+            return ResponseEntity.ok().body("true");
+        return ResponseEntity.ok().body("false");
     }
 }

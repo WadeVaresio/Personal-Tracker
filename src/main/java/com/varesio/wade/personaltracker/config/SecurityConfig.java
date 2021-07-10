@@ -9,25 +9,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
-//        httpSecurity.authorizeRequests()
-//                .mvcMatchers("/home").permitAll()
-//                .mvcMatchers("/weather/**").permitAll()
-//                .mvcMatchers("/swagger-ui/**").permitAll()
-//                .mvcMatchers("/api/docs").permitAll()
-//                .mvcMatchers("/api/**")
-//                .authenticated()
-//                .anyRequest().authenticated()
-//                .and()
-//                .oauth2Login().permitAll()
-//                .and()
-//                .logout().logoutSuccessUrl("/home");
-
         httpSecurity.authorizeRequests()
                 .mvcMatchers("/**").permitAll()
                 .and()
                 .oauth2Login().permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/")
-                .and().csrf().disable();
+                .logout().logoutSuccessUrl("/");
     }
 }
