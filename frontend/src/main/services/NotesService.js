@@ -1,10 +1,10 @@
-const saveNewNote = async (linkData) => {
+const saveNewNote = async (note) => {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(linkData)
+        body: JSON.stringify(note)
     };
 
     return await fetch('/api/savedNotes/new', requestOptions);
@@ -32,5 +32,6 @@ const deleteNote = async (note) => {
 
     return await fetch('/api/savedNotes/delete', requestOptions);
 }
+
 
 export {saveNewNote, saveEditedNote, deleteNote}
