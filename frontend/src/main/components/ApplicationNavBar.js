@@ -1,14 +1,10 @@
 import React from "react";
 import { Container, Nav, Navbar, NavLink } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import LoginButton from "./LoginButton";
-import useSWR from "swr";
+import AuthNav from "./AuthNav";
 
 
 const ApplicationNavBar = () => {
-    const fetcher = url => fetch(url).then(res => res.json());
-    const {data: loggedIn} = useSWR("/api/user/loggedIn", fetcher);
-
     const styling = {
         display: "flex",
         justifyContent: "center",
@@ -29,13 +25,11 @@ const ApplicationNavBar = () => {
                             <NavLink>Weather</NavLink>
                         </LinkContainer>
 
-                        {loggedIn &&
                         <LinkContainer to={"/savedNotes"}>
                             <NavLink>Saved Notes</NavLink>
                         </LinkContainer>
-                        }
 
-                        <LoginButton/>
+                        <AuthNav/>
                     </Nav>
                 </Navbar>
             </Container>

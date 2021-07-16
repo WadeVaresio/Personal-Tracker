@@ -1,31 +1,17 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import {Button} from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import useSWR from "swr";
 
 const LoginButton = () => {
-    const history = useHistory();
-    const fetcher = url => fetch(url).then(res => res.json());
-    const {data: loggedIn} = useSWR("/api/user/loggedIn", fetcher);
-
-    const handleClick = () => {
-        history.push("/oauth2/authorization/google");
-    }
-
+    const { loginWithRedirect } = useAuth0();
     return (
-        <>
-            {!loggedIn &&
-            <Button href="/oauth2/authorization/google" onClick={handleClick}>
-                Google Login
-            </Button>}
-
-            {loggedIn &&
-            <Button href="/logout" onClick={handleClick}>
-                Logout
-            </Button>}
-
-        </>
+        <Button
+            className="primary"
+            onClick={() => loginWithRedirect()}
+        >
+            Log In
+        </Button>
     );
-}
+};
 
 export default LoginButton;
