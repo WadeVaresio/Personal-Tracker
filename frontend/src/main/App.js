@@ -1,10 +1,11 @@
 import React from "react";
-import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import './App.css';
 import Weather from "./pages/Weather";
 import ApplicationNavBar from "./components/ApplicationNavBar";
 import SavedNotes from "./pages/SavedNotes";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 function App() {
@@ -16,17 +17,12 @@ function App() {
 
     return (
         <div className={"App"} style={styling}>
-            <BrowserRouter>
                 <Switch>
                     <Route path={"/weather"} component={Weather}/>
-                    <Route path={"/savedNotes"} component={SavedNotes}/>
-                    <Route path={"/home"} component={Home}/>
-                    <Route exact path={"/"}>
-                        <Redirect to={"/home"}/>
-                    </Route>
+                    <ProtectedRoute path={"/savedNotes"} component={SavedNotes}/>
+                    <Route path={"/"} component={Home}/>
                 </Switch>
                 <ApplicationNavBar/>
-            </BrowserRouter>
         </div>
     );
 }

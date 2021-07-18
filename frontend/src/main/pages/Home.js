@@ -3,6 +3,7 @@ import background from "../images/background.png";
 import {ImageBackground} from "react-native";
 import {useState} from "react";
 import {Card} from "react-bootstrap";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 // https://stackoverflow.com/questions/8888491/how-do-you-display-javascript-datetime-in-12-hour-am-pm-format
@@ -19,6 +20,7 @@ function formatAMPM(date) {
 
 const Home = () => {
     const [value, setValue] = useState(new Date());
+    const {user} = useAuth0();
 
     useEffect(() => {
         const interval = setInterval(
@@ -47,13 +49,13 @@ const Home = () => {
             width: '12rem',
             horizontal: 'center'
         }
-    }
+    };
 
     return (
         <ImageBackground source={background} style={styles.image}>
             <div className={"home-card"}>
                 <Card style={styles.card} bg={"primary"} text={"light"}>
-                    <Card.Title>Welcome</Card.Title>
+                    <Card.Title>{"Welcome " + (user ? user.given_name  + "!" : "")}</Card.Title>
                     <Card.Subtitle>{formatAMPM(value) + " " +
                         value.toLocaleString('default', { month: 'long' }) +
                         " " +

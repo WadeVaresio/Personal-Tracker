@@ -7,8 +7,13 @@ import Goleta_Open_Space from "../images/Goleta_Open_Space.jpg";
 import {Container} from "react-bootstrap";
 import SavedNotesTable from "../components/SavedNotesTable";
 import useSWR from "swr";
+import {fetchWithToken} from "../services/fetch";
+import {useAuth0} from "@auth0/auth0-react";
 
 const SavedNotes = () => {
+    const {getAccessTokenSilently: getToken} = useAuth0();
+    const{ data: allNotes, mutate: mutateNotes } = useSWR(['/api/savedNotes/all', getToken], fetchWithToken);
+
     const styles = {
         image: {
             flex: 1,
@@ -21,8 +26,6 @@ const SavedNotes = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [newNote, setNewNote] = useState("");
-    const fetcher = url => fetch(url).then(res => res.json());
-    const { data: allNotes, mutate: mutateNotes } = useSWR("/api/savedNotes/all", fetcher);
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => {
