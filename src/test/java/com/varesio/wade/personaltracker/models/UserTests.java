@@ -26,7 +26,7 @@ public class UserTests {
     @Test
     public void test_constructorThrowsRuntimeException() throws RuntimeException{
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            User badUser = new User(testJWTToken, "randomClaim");
+            new User(testJWTToken, "randomClaim");
         });
 
         String expectedMessage = "Custom claim: randomClaim is bad";

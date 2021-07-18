@@ -4,12 +4,14 @@ import {Button, Modal, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from "react";
 import {saveEditedNote, deleteNote} from "../services/NotesService";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 const SavedNotesTable = (notes) => {
     const [editNote, setEditNote] = useState();
     const [newNoteText, setNewNoteText] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const { getAccessTokenSilently: getAuthToken } = useAuth0();
 
     const handleClose = () => setShowModal(false);
 
@@ -23,14 +25,14 @@ const SavedNotesTable = (notes) => {
         return (
             <>
                 <Button onClick={() => editNoteClick(row)} style={{marginRight: "15px"}}>Edit</Button>
-                <Button variant={"danger"} onClick={() => deleteNote(row)}>Delete</Button>
+                <Button variant={"danger"} onClick={() => deleteNote(row, getAuthToken)}>Delete</Button>
             </>
         );
     };
 
     const handleEditSubmit = () => {
         editNote.note = newNoteText;
-        saveEditedNote(editNote);
+        saveEditedNote(editNote, getAuthToken);
         setShowModal(false);
     };
 

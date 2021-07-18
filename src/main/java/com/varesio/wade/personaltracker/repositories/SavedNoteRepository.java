@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface SavedNoteRepository extends CrudRepository<SavedNote, Long> {
-    List<SavedNote> findAllByUserId(String userId);
+    List<SavedNote> findAllByUserID(String userID);
 }

@@ -12,7 +12,8 @@ import {useAuth0} from "@auth0/auth0-react";
 
 const SavedNotes = () => {
     const {getAccessTokenSilently: getToken} = useAuth0();
-    const{ data: allNotes, mutate: mutateNotes } = useSWR(['/api/savedNotes/all', getToken], fetchWithToken);
+    const { data: allNotes, mutate: mutateNotes } = useSWR(['/api/private/savedNotes/get', getToken], fetchWithToken);
+    const { user, getAccessTokenSilently: getAuthToken } = useAuth0();
 
     const styles = {
         image: {
@@ -36,7 +37,9 @@ const SavedNotes = () => {
     const handleNewNote = (change) => {setNewNote(change.target.value)};
 
     const handleSubmit = () => {
-        saveNewNote({note: newNote});
+        saveNewNote({
+            note: newNote,
+            userID: user.email}, getAuthToken);
         mutateNotes();
         setShowModal(false);
     };
