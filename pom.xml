@@ -393,7 +393,7 @@
             </dependencies>
 
             <properties>
-                <environment-properties>${env.SPRING_PROPERTIES}</environment-properties>
+                <environment-properties>application-heroku.properties</environment-properties>
             </properties>
         </profile>
     </profiles>
