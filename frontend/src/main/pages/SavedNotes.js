@@ -19,7 +19,6 @@ const SavedNotes = () => {
         <>
             <ImageBackground source={Goleta_Open_Space} style={styles.image}>
                 <Container style={{justifyContent: 'center'}}>
-                    <hr/>
                     <SavedNotesTable/>
                 </Container>
             </ImageBackground>

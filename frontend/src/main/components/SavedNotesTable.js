@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Button, Form, Modal} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {deleteNote, saveEditedNote, saveNewNote} from "../services/NotesService";
+import {deleteNote, saveEditedNote, saveNewNote} from "../services/SavedNotesService";
 import {useAuth0} from "@auth0/auth0-react";
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import useSWR from "swr";
@@ -21,7 +21,6 @@ const SavedNotesTable = () => {
     const handleCloseNewNote = () => setShowModalNewNote(false);
     const handleShowNewNote = () => setShowModalNewNote(true);
     const handleCloseEditNote = () => setShowModalEditNote(false);
-    const handleShowEditNote = () => setShowModalEditNote(true);
 
     const handleNewNote = (change) => {
         setNewNote(change.target.value)
@@ -40,7 +39,6 @@ const SavedNotesTable = () => {
     };
 
     const editNoteClick = (row) => {
-        console.log(row);
         setEditNote(row);
         setNewNoteText(row.note);
         setShowModalEditNote(true);
@@ -81,6 +79,8 @@ const SavedNotesTable = () => {
                 <Button variant="primary" onClick={handleShowNewNote}>
                     New Note
                 </Button>
+
+                <hr/>
 
                 <Modal show={showModalEditNote} onHide={handleCloseEditNote}>
                     <Modal.Header>
