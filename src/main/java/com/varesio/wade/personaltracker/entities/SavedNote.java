@@ -11,15 +11,15 @@ public class SavedNote {
     private long id;
 
     @Column
-    private String userId;
+    private String userID;
 
 
     @Column
     private String note;
 
-    public SavedNote(long id, String userId, String note) {
+    public SavedNote(long id, String userID, String note) {
         this.id = id;
-        this.userId = userId;
+        this.userID = userID;
         this.note = note;
     }
 
@@ -33,12 +33,12 @@ public class SavedNote {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserID(String userId) {
+        this.userID = userId;
     }
 
     public String getNote() {
@@ -59,13 +59,13 @@ public class SavedNote {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, note);
+        return Objects.hash(id, userID, note);
     }
 
     @Override
     public String toString(){
         return "{id: " + this.id +
-                ", userId: " + this.userId +
+                ", userId: " + this.userID +
                 ", note: " + this.note +
                 " }";
     }

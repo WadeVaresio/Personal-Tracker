@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests()
                 .mvcMatchers("/**").permitAll()
-                .mvcMatchers("/api/savedNotes/**").authenticated()
+                .mvcMatchers("/api/private/**").authenticated()
                 .mvcMatchers("/swagger-ui/**").permitAll()
                 .and()
                 .cors()
