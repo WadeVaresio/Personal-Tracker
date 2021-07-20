@@ -23,14 +23,15 @@ const SavedNotesTable = () => {
     const handleCloseEditNote = () => setShowModalEditNote(false);
 
     const handleNewNote = (change) => {
-        setNewNote(change.target.value)
+        setNewNote(change.target.value);
     };
 
     const handleEditNote = (change) => {
         setNewNoteText(change.target.value);
     };
 
-    const handleNewNoteSubmit = () => {
+    const handleNewNoteSubmit = (event) => {
+        event.preventDefault();
         mutateNotes(saveNewNote({
             note: newNote,
             userID: user.email
@@ -53,7 +54,8 @@ const SavedNotesTable = () => {
         );
     };
 
-    const handleEditSubmit = () => {
+    const handleEditSubmit = (event) => {
+        event.preventDefault();
         editNote.note = newNoteText;
         saveEditedNote(editNote, getAuthToken);
         setShowModalEditNote(false);
@@ -126,6 +128,6 @@ const SavedNotesTable = () => {
             </div>
         </>
     );
-}
+};
 
-export default SavedNotesTable
+export default SavedNotesTable;
