@@ -14,7 +14,6 @@ const saveNewNote = async (note, tokenFetcher) => {
 };
 
 const saveEditedNote = async (editedNote, tokenFetcher) => {
-    console.log(editedNote)
     const authToken = await tokenFetcher();
 
     const requestOptions = {

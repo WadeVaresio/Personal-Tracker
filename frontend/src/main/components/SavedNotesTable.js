@@ -1,31 +1,56 @@
-import React from "react";
+import React, {useState} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import {Button, Modal, Form} from "react-bootstrap";
+import {Button, Form, Modal} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useState} from "react";
-import {saveEditedNote, deleteNote} from "../services/NotesService";
+import {deleteNote, saveEditedNote, saveNewNote} from "../services/NotesService";
 import {useAuth0} from "@auth0/auth0-react";
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import useSWR from "swr";
+import {fetchWithToken} from "../services/fetch";
 
 
-const SavedNotesTable = (notes) => {
+const SavedNotesTable = () => {
     const [editNote, setEditNote] = useState();
     const [newNoteText, setNewNoteText] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const { getAccessTokenSilently: getAuthToken } = useAuth0();
+    const [showModalNewNote, setShowModalNewNote] = useState(false);
+    const [showModalEditNote, setShowModalEditNote] = useState(false);
+    const [newNote, setNewNote] = useState("");
+    const {user, getAccessTokenSilently: getAuthToken} = useAuth0();
+    const {data: notes, mutate: mutateNotes} = useSWR(['/api/private/savedNotes/get', getAuthToken], fetchWithToken);
 
-    const handleClose = () => setShowModal(false);
+    const handleCloseNewNote = () => setShowModalNewNote(false);
+    const handleShowNewNote = () => setShowModalNewNote(true);
+    const handleCloseEditNote = () => setShowModalEditNote(false);
+    const handleShowEditNote = () => setShowModalEditNote(true);
+
+    const handleNewNote = (change) => {
+        setNewNote(change.target.value)
+    };
+
+    const handleEditNote = (change) => {
+        setNewNoteText(change.target.value);
+    };
+
+    const handleNewNoteSubmit = () => {
+        mutateNotes(saveNewNote({
+            note: newNote,
+            userID: user.email
+        }, getAuthToken));
+        setShowModalNewNote(false);
+    };
 
     const editNoteClick = (row) => {
+        console.log(row);
         setEditNote(row);
         setNewNoteText(row.note);
-        setShowModal(true);
+        setShowModalEditNote(true);
     };
 
     const getEditDeleteButtons = row => {
         return (
             <>
                 <Button onClick={() => editNoteClick(row)} style={{marginRight: "15px"}}>Edit</Button>
-                <Button variant={"danger"} onClick={() => deleteNote(row, getAuthToken)}>Delete</Button>
+                <Button variant={"danger"} onClick={() => mutateNotes(deleteNote(row, getAuthToken))}>Delete</Button>
             </>
         );
     };
@@ -33,12 +58,10 @@ const SavedNotesTable = (notes) => {
     const handleEditSubmit = () => {
         editNote.note = newNoteText;
         saveEditedNote(editNote, getAuthToken);
-        setShowModal(false);
+        setShowModalEditNote(false);
     };
 
-    const handleEditNote = (change) => { setNewNoteText(change.target.value); };
-
-    const tableColumns = [ {
+    const tableColumns = [{
         hidden: true,
         dataField: 'id',
         text: 'ID'
@@ -52,25 +75,55 @@ const SavedNotesTable = (notes) => {
         formatter: (_cell, row) => getEditDeleteButtons(row)
     }];
 
-    return(
+    return (
         <>
-            <BootstrapTable keyField={'id'} data={notes.notes || []} columns={tableColumns} className={"table table-responsive"}/>
+            <div className={"container"}>
+                <Button variant="primary" onClick={handleShowNewNote}>
+                    New Note
+                </Button>
 
-            <Modal show={showModal} onHide={handleClose}>
-                <Modal.Header>
-                    <Modal.Title>Edit Note</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleEditSubmit}>
-                        <Form.Label>Note</Form.Label>
-                        <Form.Control type={"text"} defaultValue={newNoteText} onChange={handleEditNote}/>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant={"secondary"} onClick={handleClose}>Cancel</Button>
-                    <Button variant={"primary"} onClick={handleEditSubmit}>Make Edit</Button>
-                </Modal.Footer>
-            </Modal>
+                <Modal show={showModalEditNote} onHide={handleCloseEditNote}>
+                    <Modal.Header>
+                        <Modal.Title>Edit Note</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={handleEditSubmit}>
+                            <Form.Label>Note</Form.Label>
+                            <Form.Control type={"text"} defaultValue={newNoteText} onChange={handleEditNote}/>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant={"secondary"} onClick={handleCloseEditNote}>Cancel</Button>
+                        <Button variant={"primary"} onClick={handleEditSubmit}>Make Edit</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={showModalNewNote} onHide={handleCloseNewNote}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>New Note To Save</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={handleNewNoteSubmit}>
+                            <Form.Label>Note</Form.Label>
+                            <Form.Control type={"text"} placeholder={"Note to save"} onChange={handleNewNote}/>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseNewNote}>
+                            Cancel
+                        </Button>
+                        <Button variant="primary" onClick={handleNewNoteSubmit}>
+                            Save Note
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <BootstrapTable keyField={'id'}
+                                data={notes || []}
+                                columns={tableColumns}
+                                className={"table table-responsive"}
+                                pagination={paginationFactory()}/>
+            </div>
         </>
     );
 }
