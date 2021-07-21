@@ -1,4 +1,4 @@
-const saveNewNote = async (note, tokenFetcher) => {
+const saveNewDeadline = async (deadline, tokenFetcher) => {
     const authToken = await tokenFetcher();
 
     const requestOptions = {
@@ -7,13 +7,13 @@ const saveNewNote = async (note, tokenFetcher) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${authToken}`
         },
-        body: JSON.stringify(note)
+        body: JSON.stringify(deadline)
     };
 
-    return await fetch('/api/private/savedNotes/new', requestOptions);
+    return await fetch('/api/private/deadlines/new', requestOptions);
 };
 
-const saveEditedNote = async (editedNote, tokenFetcher) => {
+const saveEditedDeadline = async(editedDeadline, tokenFetcher) => {
     const authToken = await tokenFetcher();
 
     const requestOptions = {
@@ -22,12 +22,14 @@ const saveEditedNote = async (editedNote, tokenFetcher) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${authToken}`
         },
-        body: JSON.stringify(editedNote)
+        body: JSON.stringify(editedDeadline)
     };
-    return await fetch(`/api/private/savedNotes/put`, requestOptions);
-};
 
-const deleteNote = async (note, tokenFetcher) => {
+    return await fetch(`/api/private/deadlines/put`, requestOptions);
+}
+
+
+const deleteDeadline = async (deadline, tokenFetcher) => {
     const authToken = await tokenFetcher();
 
     const requestOptions = {
@@ -36,11 +38,10 @@ const deleteNote = async (note, tokenFetcher) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${authToken}`
         },
-        body: JSON.stringify(note)
+        body: JSON.stringify(deadline)
     };
 
-    return await fetch('/api/private/savedNotes/delete', requestOptions);
+    return await fetch('/api/private/deadlines/delete', requestOptions);
 };
 
-
-export {saveNewNote, saveEditedNote, deleteNote}
+export {saveNewDeadline, saveEditedDeadline, deleteDeadline};

@@ -39,6 +39,6 @@ const ApplicationNavBar = () => {
             </Container>
         </div>
     );
-}
+};
 
 export default ApplicationNavBar;
