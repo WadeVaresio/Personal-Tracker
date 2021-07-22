@@ -3,12 +3,31 @@ import {Button, Form, Modal} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import {useState} from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
 import {saveNewDeadline, deleteDeadline, saveEditedDeadline} from "../services/DeadlinesService";
 import {useAuth0} from "@auth0/auth0-react";
 import useSWR from "swr";
 import {fetchWithToken} from "../services/fetch";
+
+
+const createDateString = (dateString) => {
+    let date = new Date(dateString);
+
+    const dayWeek = date.toLocaleString('en-us', { weekday: 'long'}).substring(0, 3);
+    const month = date.toLocaleString('default', {month: 'long'});
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const timeDay = hour < 12 ? "AM" : "PM";
+
+    return dayWeek + " " +
+            month + " " +
+            date.getDate() + " " +
+            (hour > 12 ? hour - 12 : hour) + ":" +
+            (minutes < 10 ? "0" + minutes : minutes) + " " +
+            timeDay;
+};
+
 
 const DeadlinesTable = () => {
     const [showModalNewDeadline, setShowModalNewDeadline] = useState(false);
@@ -24,6 +43,7 @@ const DeadlinesTable = () => {
     const handleFormSubmit = (event) => {
         event.preventDefault();
         setShowModalNewDeadline(false);
+        console.log(deadlineDate);
         mutateDeadlines(saveNewDeadline({
             date: deadlineDate,
             description: deadlineDesc,
@@ -64,7 +84,9 @@ const DeadlinesTable = () => {
         text: 'ID'
     }, {
         dataField: 'date',
-        text: 'Date'
+        text: 'Date',
+        isDummyField: true,
+        formatter: (_cell, row) => createDateString(row.date)
     },{
         dataField: 'description',
         text: 'Description'
@@ -94,10 +116,9 @@ const DeadlinesTable = () => {
 
                     <hr/>
 
-                    <DatePicker
-                        selected={deadlineDate}
-                        showTimeSelect
-                        onChange={(date) => setDeadlineDate(date)}/>
+                    <Datetime
+                        value={deadlineDate}
+                        onChange={setDeadlineDate}/>
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -119,10 +140,9 @@ const DeadlinesTable = () => {
 
                     <hr/>
 
-                    <DatePicker
-                        selected={editDeadlineNewDate}
-                        showTimeSelect
-                        onChange={(date) => setEditDeadlineNewDate(date)}/>
+                    <Datetime
+                        value={editDeadlineNewDate}
+                        onChange={setEditDeadlineNewDate}/>
                 </Modal.Body>
 
                 <Modal.Footer>

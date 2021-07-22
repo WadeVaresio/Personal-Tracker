@@ -1,7 +1,7 @@
 package com.varesio.wade.personaltracker.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -15,12 +15,12 @@ public class Deadline {
     private String userID;
 
     @Column
-    private Date date;
+    private Timestamp date;
 
     @Column(nullable = false)
     private String description;
 
-    public Deadline(long id, String userID, Date date, String description) {
+    public Deadline(long id, String userID, Timestamp date, String description) {
         this.id = id;
         this.userID = userID;
         this.date = date;
@@ -45,11 +45,11 @@ public class Deadline {
         this.userID = userID;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
