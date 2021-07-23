@@ -5,6 +5,7 @@ import './App.css';
 import Weather from "./pages/Weather";
 import ApplicationNavBar from "./components/ApplicationNavBar";
 import SavedNotes from "./pages/SavedNotes";
+import Deadlines from "./pages/Deadlines";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -20,6 +21,7 @@ function App() {
                 <Switch>
                     <Route path={"/weather"} component={Weather}/>
                     <ProtectedRoute path={"/savedNotes"} component={SavedNotes}/>
+                    <ProtectedRoute path={"/deadlines"} component={Deadlines}/>
                     <Route path={"/"} component={Home}/>
                 </Switch>
                 <ApplicationNavBar/>
