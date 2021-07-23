@@ -43,12 +43,16 @@ const DeadlinesTable = () => {
     const handleFormSubmit = (event) => {
         event.preventDefault();
         setShowModalNewDeadline(false);
-        console.log(deadlineDate);
         mutateDeadlines(saveNewDeadline({
             date: deadlineDate,
             description: deadlineDesc,
             userID: user.email
         }, getAuthToken));
+    };
+
+    const handleNewDeadlineClick = () => {
+        setDeadlineDate(new Date());
+        setShowModalNewDeadline(true);
     };
 
     const handleEditDeadlineSubmit = (event) => {
@@ -85,11 +89,13 @@ const DeadlinesTable = () => {
     }, {
         dataField: 'date',
         text: 'Date',
+        sort: true,
         isDummyField: true,
         formatter: (_cell, row) => createDateString(row.date)
     },{
         dataField: 'description',
-        text: 'Description'
+        text: 'Description',
+        sort: true
     },{
         dataField: 'edit',
         text: 'Edit/Delete',
@@ -99,7 +105,7 @@ const DeadlinesTable = () => {
 
     return(
         <>
-            <Button onClick={() => setShowModalNewDeadline(true)}>New Deadline</Button>
+            <Button onClick={handleNewDeadlineClick}>New Deadline</Button>
 
             <hr/>
 
@@ -112,13 +118,14 @@ const DeadlinesTable = () => {
                     <Form onSubmit={handleFormSubmit}>
                         <Form.Label>Deadline Description</Form.Label>
                         <Form.Control type={"text"} placeholder={"Enter Deadline Description"} onChange={(change) => setDeadlineDesc(change.target.value)}/>
+
+                        <hr/>
+
+                        <Form.Label>Deadline</Form.Label>
+                        <Datetime
+                            value={deadlineDate}
+                            onChange={setDeadlineDate}/>
                     </Form>
-
-                    <hr/>
-
-                    <Datetime
-                        value={deadlineDate}
-                        onChange={setDeadlineDate}/>
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -136,13 +143,14 @@ const DeadlinesTable = () => {
                     <Form onSubmit={handleEditDeadlineSubmit}>
                         <Form.Label>Deadline Description</Form.Label>
                         <Form.Control type={"text"} defaultValue={editDeadlineNewDesc} onChange={(change) => setEditDeadlineNewDesc(change.target.value)}/>
+
+                        <hr/>
+
+                        <Form.Label>Deadline</Form.Label>
+                        <Datetime
+                            value={editDeadlineNewDate}
+                            onChange={setEditDeadlineNewDate}/>
                     </Form>
-
-                    <hr/>
-
-                    <Datetime
-                        value={editDeadlineNewDate}
-                        onChange={setEditDeadlineNewDate}/>
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -154,7 +162,9 @@ const DeadlinesTable = () => {
             <BootstrapTable keyField={'id'}
                             data={deadlines || []}
                             columns={tableColumns}
-                            pagination={paginationFactory()}/>
+                            pagination={paginationFactory()}
+                            rowStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.25)', color: '#ffffff'}}
+                            bootstrap4={true}/>
         </>
     )
 }
