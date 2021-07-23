@@ -27,6 +27,8 @@ public class Deadline {
         this.description = description;
     }
 
+    public Deadline(){}
+
 
     public long getId() {
         return id;
