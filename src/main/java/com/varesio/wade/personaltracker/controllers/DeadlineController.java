@@ -55,12 +55,12 @@ public class DeadlineController {
         if(!user.getEmail().equals(deadline.getUserID()))
             return ResponseEntity.badRequest().build();
 
-        Optional<Deadline> searcheResult = deadlineRepository.findById(deadline.getId());
+        Optional<Deadline> searchResult = deadlineRepository.findById(deadline.getId());
 
-        if(searcheResult.isEmpty())
-            return ResponseEntity.notFound().build();
+        if(searchResult.isEmpty())
+            return ResponseEntity.badRequest().build();
 
-        if(!searcheResult.get().getUserID().equals(user.getEmail()))
+        if(!searchResult.get().getUserID().equals(user.getEmail()))
             return ResponseEntity.badRequest().build();
 
         deadlineRepository.save(deadline);
