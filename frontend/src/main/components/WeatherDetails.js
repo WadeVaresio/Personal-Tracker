@@ -15,6 +15,7 @@ const createDateString = (date) => {
 }
 
 const createCurrentWeatherCard = (weatherData, cardStyle, cardListStyle) => {
+    console.log(weatherData);
     if(weatherData === undefined)
         return <></>
 
@@ -23,7 +24,7 @@ const createCurrentWeatherCard = (weatherData, cardStyle, cardListStyle) => {
     return <Card style={cardStyle} border={"dark"}>
         <Card.Body>
             <Card.Title style={{color: cardListStyle.color}}>Current Weather</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Last Updated</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">{"Last Updated: " + weatherData.current.last_updated}</Card.Subtitle>
             <Card.Text>
                 <ListGroup variant={"flush"}>
                     <ListGroup.Item style={cardListStyle}>{current.condition.text}</ListGroup.Item>
@@ -68,7 +69,7 @@ const createForecastWeatherCard = (weatherData, day, cardStyle, cardListStyle) =
 }
 
 const WeatherDetails = ({weatherData}) => {
-    const cardStyle = {marginLeft: '1em', backgroundColor: 'transparent'};
+    const cardStyle = {marginLeft: '1em', backgroundColor: 'rgba(0,0,0,0.5)'};
     const cardListStyle = {backgroundColor:'transparent', color: '#ffffff'};
 
     return (
