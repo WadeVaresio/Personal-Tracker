@@ -9,7 +9,7 @@ const createDateString = (date) => {
         const day = date.getDate();
         return month + " " + day;
     }catch (e) {
-        console.log("Error trying to create date string from" + e)
+        console.log("Error trying to create date string from" + e);
         return "Error";
     }
 }
@@ -23,7 +23,7 @@ const createCurrentWeatherCard = (weatherData, cardStyle, cardListStyle) => {
     return <Card style={cardStyle} border={"dark"}>
         <Card.Body>
             <Card.Title style={{color: cardListStyle.color}}>Current Weather</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Last Updated</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">{"Last Updated: " + weatherData.current.last_updated}</Card.Subtitle>
             <Card.Text>
                 <ListGroup variant={"flush"}>
                     <ListGroup.Item style={cardListStyle}>{current.condition.text}</ListGroup.Item>
@@ -53,7 +53,7 @@ const createForecastWeatherCard = (weatherData, day, cardStyle, cardListStyle) =
     return <Card style={cardStyle} border={"dark"}>
         <Card.Body>
             <Card.Title style={{color: cardListStyle.color}}>{dateTitle[day]}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{dateString}</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted" style={{textColor: '#ffffff'}}>{dateString}</Card.Subtitle>
             <Card.Text>
                 <ListGroup variant={"light"}>
                     <ListGroup.Item style={cardListStyle}>{forecastDay.day.condition.text + " ~" + forecastDay.day.avgtemp_f + "F"}</ListGroup.Item>
@@ -68,7 +68,7 @@ const createForecastWeatherCard = (weatherData, day, cardStyle, cardListStyle) =
 }
 
 const WeatherDetails = ({weatherData}) => {
-    const cardStyle = {marginLeft: '1em', backgroundColor: 'transparent'};
+    const cardStyle = {marginLeft: '1em', backgroundColor: 'rgba(0,0,0,0.5)', color: '#ffffff'};
     const cardListStyle = {backgroundColor:'transparent', color: '#ffffff'};
 
     return (
