@@ -7,9 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -32,7 +30,7 @@ public class NasaServiceTests {
                 .andRespond(withSuccess(fakeResult, MediaType.IMAGE_PNG));
 
         byte [] response = nasaService.getSatelliteImage("123", "123");
-        assertTrue(Arrays.equals(fakeResult, response));
+        assertArrayEquals(fakeResult, response);
     }
 
 }
