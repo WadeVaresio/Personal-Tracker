@@ -1,7 +1,7 @@
 package com.varesio.wade.personaltracker.services;
 
 import org.json.JSONArray;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,11 +14,9 @@ import org.json.JSONObject;
 public class LocationService {
     private final String BASE_URI = "https://nominatim.openstreetmap.org/search";
 
-    private final RestTemplate restTemplate;
+    @Autowired
+    private  RestTemplate restTemplate;
 
-    public LocationService(RestTemplateBuilder restTemplateBuilder){
-        restTemplate = restTemplateBuilder.build();
-    }
 
     public HashMap<String, String> getCoordinates(String location){
         String params = String.format("/?q=%s&format=json", location);
