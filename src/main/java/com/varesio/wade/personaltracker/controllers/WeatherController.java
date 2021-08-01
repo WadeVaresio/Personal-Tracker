@@ -1,6 +1,5 @@
 package com.varesio.wade.personaltracker.controllers;
 
-import com.varesio.wade.personaltracker.services.LocationService;
 import com.varesio.wade.personaltracker.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +15,8 @@ public class WeatherController {
     @Autowired
     private WeatherService weatherService;
 
-    @Autowired
-    private LocationService locationService;
-
-    @GetMapping(value = "", produces = "application/json")
+    @GetMapping(value = "get", produces = "application/json")
     public ResponseEntity<String> getForecastWeather(@RequestParam(required = true) String location){
-        locationService.getCoordinates(location);
-
         return ResponseEntity.ok().body(weatherService.getWeather(location));
     }
 }
