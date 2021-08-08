@@ -2,6 +2,7 @@ package com.varesio.wade.personaltracker.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,7 @@ public class WeatherService {
     private final String BASE_URI = "http://api.weatherapi.com/v1/";
 
     @Autowired
+    @Lazy
     private  RestTemplate restTemplate;
 
     public String getWeather(String location){
