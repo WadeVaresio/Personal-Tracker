@@ -27,7 +27,7 @@ public class NasaController {
     @Autowired
     private LocationService locationService;
 
-    @GetMapping(value="/satImage")
+    @GetMapping(value="/satImage/get")
     public ResponseEntity<byte[]> getSatelliteImage(@RequestParam("location") String location){
         HashMap<String, String> coordinates = locationService.getCoordinates(location);
 

@@ -1,7 +1,8 @@
 package com.varesio.wade.personaltracker.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,11 +12,9 @@ public class NasaService {
     @Value("${nasa.api.key}")
     private String NASA_API_KEY;
 
-    private final RestTemplate restTemplate;
-
-    public NasaService(RestTemplateBuilder restTemplateBuilder){
-        restTemplate = restTemplateBuilder.build();
-    }
+    @Autowired
+    @Lazy
+    private  RestTemplate restTemplate;
 
     private final String BASE_URI = "https://api.nasa.gov/planetary/earth/imagery";
 
