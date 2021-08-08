@@ -124,6 +124,7 @@ const SavedNotesTable = () => {
                                 data={notes || []}
                                 columns={tableColumns}
                                 className={"table table-responsive"}
+                                rowStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.25)', color: '#ffffff'}}
                                 pagination={paginationFactory()}/>
             </div>
         </>
