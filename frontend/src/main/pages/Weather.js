@@ -19,8 +19,8 @@ const getFetchedWeatherDataLocation = (weatherData, userLocation) => {
 const Weather = () =>{
     const [location, setLocation] = useState("Goleta");
     const [newLocation, setNewLocation] = useState("");
-    const { data: weatherData, error} = useSWR(`/api/weather?location=${encodeURIComponent(location)}`, fetchWithoutToken);
-    const { data: backgroundImage } = useSWR('/api/nasa/satImage/Goleta');
+    const { data: weatherData, error} = useSWR(`/api/weather/get?location=${encodeURIComponent(location)}`, fetchWithoutToken);
+    const { data: backgroundImage } = useSWR(`/api/nasa/satImage/get?location=${encodeURIComponent(location)}`);
     console.log(backgroundImage);
 
     const handleNewLocationSubmit = (event) => {
@@ -64,7 +64,7 @@ const Weather = () =>{
         </Card>);
 
     return (
-        <ImageBackground source={`/api/nasa/satImage?location=${encodeURIComponent(location)}`} style={styles.image}>
+        <ImageBackground source={`/api/nasa/satImage/get?location=${encodeURIComponent(location)}`} style={styles.image}>
             <div className={"item-container"}>
                 <View style={{flexDirection: 'column'}}>
                     <Text style={styles.titleText}>{getFetchedWeatherDataLocation(weatherData, location)}</Text>
