@@ -3,6 +3,7 @@ package com.varesio.wade.personaltracker.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.varesio.wade.personaltracker.entities.SavedNote;
 import com.varesio.wade.personaltracker.repositories.SavedNoteRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,15 +32,24 @@ public class SavedNoteControllerTests {
     private final SavedNote savedNote1 = new SavedNote(1L, "wadevaresio@gmail.com", "test note");
     @MockBean
     SavedNoteRepository savedNoteRepository;
-    @Autowired
+
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper mapper;
+
+    @Autowired
+    private WebApplicationContext context;
 
     private final String GET_MAPPING = "/api/private/savedNotes/get";
     private final String DELETE_MAPPING = "/api/private/savedNotes/delete";
     private final String PUT_MAPPING = "/api/private/savedNotes/put";
     private final String POST_MAPPING = "/api/private/savedNotes/new";
+
+    @BeforeEach
+    public void setup(){
+        mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+    }
 
     @Test
     public void test_newSavedNote() throws Exception {
